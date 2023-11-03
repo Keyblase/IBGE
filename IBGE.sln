@@ -3,13 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34227.203
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBGE.MinimalAPI", "IBGE.MinimalAPI\IBGE.MinimalAPI.csproj", "{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBGE.MinimalAPI", "IBGE.MinimalAPI\IBGE.MinimalAPI.csproj", "{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBGE.Tests", "IBGE.Tests\IBGE.Tests.csproj", "{5871C218-AD13-4CD8-A130-189B78D29B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBGE.Tests", "IBGE.Tests\IBGE.Tests.csproj", "{5871C218-AD13-4CD8-A130-189B78D29B98}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5329365-7842-4B96-B8E9-48E5AF4E9DF9}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9A6222F1-ECCF-4702-99F9-4688F10645BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLS", "SQLS", "{976423D9-B4BD-4904-9EE3-58370820FA81}"
+	ProjectSection(SolutionItems) = preProject
+		SQLS\Data.sql = SQLS\Data.sql
+		SQLS\init.sh = SQLS\init.sh
+		SQLS\Schema.sql = SQLS\Schema.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataFixes", "DataFixes", "{06E46A35-F899-4EDD-A8DB-48D232F08AA4}"
+	ProjectSection(SolutionItems) = preProject
+		SQLS\DataFixes\2021-03-14-06-31_corrige_sigla_estado_roraima.sql = SQLS\DataFixes\2021-03-14-06-31_corrige_sigla_estado_roraima.sql
 	EndProjectSection
 EndProject
 Global
@@ -26,9 +40,16 @@ Global
 		{5871C218-AD13-4CD8-A130-189B78D29B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5871C218-AD13-4CD8-A130-189B78D29B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5871C218-AD13-4CD8-A130-189B78D29B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06E46A35-F899-4EDD-A8DB-48D232F08AA4} = {976423D9-B4BD-4904-9EE3-58370820FA81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCA92792-9A40-49DA-B5C0-550E212F4EE6}
