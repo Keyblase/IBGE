@@ -1,3 +1,4 @@
+using IBGE.Data.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.Resource;
@@ -50,6 +51,15 @@ app.MapGet("/weatherforecast", (HttpContext httpContext) =>
 .WithName("GetWeatherForecast")
 .WithOpenApi()
 .RequireAuthorization();
+
+app.MapPost("/users", (User user) =>
+{
+    // Logic to store the user in a database goes here
+    User userReceive = user;
+    // For simplicity, we'll just return the user
+    return Results.Created($"/users/{user.Email}", user);
+});
+
 
 app.Run();
 

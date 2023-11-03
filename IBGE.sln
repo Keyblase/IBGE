@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataFixes", "DataFixes", "{
 		SQLS\DataFixes\2021-03-14-06-31_corrige_sigla_estado_roraima.sql = SQLS\DataFixes\2021-03-14-06-31_corrige_sigla_estado_roraima.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBGE.Data", "IBGE.Data\IBGE.Data.csproj", "{F70F171F-FD59-43DA-B545-0E6079EA9A73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A6222F1-ECCF-4702-99F9-4688F10645BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70F171F-FD59-43DA-B545-0E6079EA9A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70F171F-FD59-43DA-B545-0E6079EA9A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70F171F-FD59-43DA-B545-0E6079EA9A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70F171F-FD59-43DA-B545-0E6079EA9A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

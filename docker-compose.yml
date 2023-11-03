@@ -14,13 +14,8 @@ services:
       MSSQL_PID: "Developer"
     ports:
       - "1433:1433"
-  mssqltools:
-    image: mcr.microsoft.com/mssql-tools
-    depends_on:
-      - sqlserver
     volumes:  
       - ./SQLS/Schema.sql:/tmp/Schema.sql
       - ./SQLS/Data.sql:/tmp/Data.sql
       - ./SQLS/DataFixes/2021-03-14-06-31_corrige_sigla_estado_roraima.sql:/tmp/DataFixes/2021-03-14-06-31_corrige_sigla_estado_roraima.sql
       - ./SQLS/init.sh:/tmp/init.sh
-    command: /bin/bash ./tmp/init.sh
