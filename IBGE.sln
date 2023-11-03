@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34227.203
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBGE.MinimalAPI", "IBGE.MinimalAPI\IBGE.MinimalAPI.csproj", "{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBGE.Tests", "IBGE.Tests\IBGE.Tests.csproj", "{5871C218-AD13-4CD8-A130-189B78D29B98}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C5329365-7842-4B96-B8E9-48E5AF4E9DF9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDAA0E0-FE75-4571-B7BA-94F4AE0B8F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5871C218-AD13-4CD8-A130-189B78D29B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5871C218-AD13-4CD8-A130-189B78D29B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5871C218-AD13-4CD8-A130-189B78D29B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5871C218-AD13-4CD8-A130-189B78D29B98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCA92792-9A40-49DA-B5C0-550E212F4EE6}
+	EndGlobalSection
+EndGlobal
