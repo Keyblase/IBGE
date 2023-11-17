@@ -7,8 +7,7 @@ namespace IBGE.Data.Service;
 public class DbService : IDbService
 {
     private readonly IDbConnection _db;
-
-    public DbService(IConfiguration configuration) => _db = new SqlConnection(configuration.GetConnectionString("conn"));
+    public DbService() => _db = new SqlConnection("Data Source=sqlserver;Persist Security Info=True;User ID=sa;Password=SqlServer2019!;Encrypt=True;Trust Server Certificate=True");
 
     public async Task<T> GetAsync<T>(string command, object parms)
     {
@@ -17,7 +16,6 @@ public class DbService : IDbService
         result = (await _db.QueryAsync<T>(command, parms).ConfigureAwait(false)).FirstOrDefault();
 
         return result;
-
     }
 
     public async Task<List<T>> GetAll<T>(string command, object parms)

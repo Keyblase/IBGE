@@ -1,10 +1,11 @@
-﻿using IBGEModel = IBGE.Data.Model.IBGE;
+﻿using IBGE.Data.Model;
 
 namespace IBGE.Data.Service.Interface;
 public interface IUserService
 {
-    Task<bool> CreateUser(IBGEModel user);
-    Task<List<IBGEModel>> GetUserList();
-    Task<IBGEModel> UpdateUser(IBGEModel user);
+    Task<bool> CreateUser(User user);
+    Task<List<User>> GetUserList();
+    Task<User> GetUser(int id);
+    Task<User> UpdateUser(User user);
     Task<bool> DeleteUser(int key);
 }
