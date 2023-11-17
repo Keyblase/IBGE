@@ -3,9 +3,9 @@
 namespace IBGE.Data.Service.Interface;
 public interface IUserService
 {
-    Task<bool> CreateUser(User user);
-    Task<List<User>> GetUserList();
-    Task<User> GetUser(int id);
-    Task<User> UpdateUser(User user);
-    Task<bool> DeleteUser(int key);
+    Task<bool> Create(User user);
+    Task<List<User>> GetAllAsList();
+    Task<User> GetById(int id);
+    Task<User> Update(User user);
+    Task<bool> Delete(int key);
 }

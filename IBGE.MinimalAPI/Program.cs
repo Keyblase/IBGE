@@ -1,3 +1,4 @@
+using ClosedXML.Excel;
 using IBGE.Data.Model;
 using IBGE.Data.Service;
 using IBGE.Data.Service.Interface;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.Resource;
+using Microsoft.OpenApi.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +60,7 @@ app.MapGet("/weatherforecast", (HttpContext httpContext) =>
 .WithOpenApi()
 .RequireAuthorization();
 
+#region User
 app.MapPost("/users", (User user) =>
 {
     // Logic to store the user in a database goes here
@@ -72,12 +75,12 @@ app.MapPost("/users", (User user) =>
 })
 .WithTags("Authentication & Authorization");
 
-app.MapGet("/user", async ([FromServices] IUserService employeeService) => await employeeService.GetUserList()).WithTags("Teste");
-app.MapGet("/user/{id}", async ([FromServices] IUserService employeeService, int id) => await employeeService.GetUser(id));
-app.MapPost("/user", async ([FromServices] IUserService employeeService, User user) => await employeeService.CreateUser(user));
-app.MapPut("/user", async ([FromServices] IUserService employeeService, User user) => await employeeService.UpdateUser(user));
-app.MapDelete("/user/{id}", async ([FromServices] IUserService employeeService, int id) => await employeeService.DeleteUser(id));
-
+app.MapGet("/user", async ([FromServices] IUserService employeeService) => await employeeService.GetAllAsList()).WithTags("Teste");
+app.MapGet("/user/{id}", async ([FromServices] IUserService employeeService, int id) => await employeeService.GetById(id));
+app.MapPost("/user", async ([FromServices] IUserService employeeService, User user) => await employeeService.Create(user));
+app.MapPut("/user", async ([FromServices] IUserService employeeService, User user) => await employeeService.Update(user));
+app.MapDelete("/user/{id}", async ([FromServices] IUserService employeeService, int id) => await employeeService.Delete(id));
+#endregion User
 #region IBGE
 app.MapGet("/ibge", async ([FromServices] IIBGEService ibgeService) => await ibgeService.GetAllInformation())
 .WithOpenApi(operation => new(operation)
@@ -112,7 +115,24 @@ app.MapPut("/ibge", async ([FromServices] IIBGEService ibgeService, IBGE.Data.Mo
 app.MapDelete("/ibge/{id}", async ([FromServices] IIBGEService ibgeService, string id) => await ibgeService.Delete(id))
     .WithOpenApi(operation => new(operation) { Summary = "Apaga dados IBGE filtrado pelo codigo de cadastro IBGE", Description = "Enpoint para deletar o registro da Tabela IBGE." })
     .WithTags("Informações IBGE");
-#endregion
+#endregion IBGE
+
+#region Aditional Functionality
+app.MapPost("/upload", (IFormFile file) =>
+{
+    using Stream stream = file.OpenReadStream();
+    using var workbook = new XLWorkbook(stream);
+    // Process the data from the .xlsx file
+    // ...
+    return Results.Ok();
+})
+.WithOpenApi(operation => new(operation)
+{
+    Summary = "Upload an Excel file",
+    Description = "This endpoint allows you to upload an Excel file",
+    OperationId = "UploadExcelFile",
+});
+#endregion Aditional Functionality
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

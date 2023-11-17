@@ -11,6 +11,4 @@ public interface IIBGEService
     Task<IBGEModel> GetInformationByCity(string cityName);
     Task<IBGEModel> GetInformationByState(string StateUF);
     Task<IBGEModel> GetInformationByCode(string id);
-
-
 }

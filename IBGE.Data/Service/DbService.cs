@@ -7,7 +7,7 @@ namespace IBGE.Data.Service;
 public class DbService : IDbService
 {
     private readonly IDbConnection _db;
-    public DbService() => _db = new SqlConnection("Data Source=sqlserver;Persist Security Info=True;User ID=sa;Password=SqlServer2019!;Encrypt=True;Trust Server Certificate=True");
+    public DbService(string conn = "Data Source=sqlserver;Persist Security Info=True;User ID=sa;Password=SqlServer2019!;Encrypt=True;Trust Server Certificate=True") => _db = new SqlConnection(conn);
 
     public async Task<T> GetAsync<T>(string command, object parms)
     {

@@ -1,5 +1,4 @@
-﻿using IBGE.Data.Model;
-using IBGE.Data.Service.Interface;
+﻿using IBGE.Data.Service.Interface;
 using IBGEModel = IBGE.Data.Model.IBGE;
 
 namespace IBGE.Data.Service;
@@ -12,8 +11,7 @@ public class IBGEService : IIBGEService
     #region CRUD
     public async Task<bool> Create(IBGEModel ibgeinput)
     {
-        _ =
-            await _dbService.EditData(
+        _ = await _dbService.EditData(
                 "INSERT INTO IBGE (Id,State, City) VALUES (@Id, @State, @City)",
                 ibgeinput);
         return true;
@@ -21,8 +19,7 @@ public class IBGEService : IIBGEService
 
     public async Task<IBGEModel> Update(IBGEModel ibgeinput)
     {
-        _ =
-            await _dbService.EditData(
+        _ = await _dbService.EditData(
                 "UPDATE IBGE SET State=@State, City=@City WHERE Id=@Id",
                 ibgeinput);
         return ibgeinput;
