@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34227.203
@@ -26,7 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataFixes", "DataFixes", "{
 		SQLS\DataFixes\2021-03-14-06-31_corrige_sigla_estado_roraima.sql = SQLS\DataFixes\2021-03-14-06-31_corrige_sigla_estado_roraima.sql
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IBGE.Data", "IBGE.Data\IBGE.Data.csproj", "{F70F171F-FD59-43DA-B545-0E6079EA9A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IBGE.Data", "IBGE.Data\IBGE.Data.csproj", "{F70F171F-FD59-43DA-B545-0E6079EA9A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

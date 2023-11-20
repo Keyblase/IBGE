@@ -1,19 +1,38 @@
+using System.Security.Claims;
+using System.Text;
 using ClosedXML.Excel;
+using IBGE.Data;
 using IBGE.Data.Model;
 using IBGE.Data.Service;
 using IBGE.Data.Service.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.Resource;
-using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
-builder.Services.AddAuthorization();
+builder.Services
+    .AddAuthentication(x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.PrivateKey)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("manager"));
+    options.AddPolicy("Employee", policy => policy.RequireRole("employee"));
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +40,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IDbService, DbService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IIBGEService, IBGEService>();
+builder.Services.AddTransient<TokenService>();
 
 WebApplication app = builder.Build();
 
@@ -36,50 +56,44 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-string scopeRequiredByApi = app.Configuration["AzureAd:Scopes"] ?? "";
-string[] summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-{
-    httpContext.VerifyUserHasAnyAcceptedScope(scopeRequiredByApi);
-
-    WeatherForecast[] forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi()
-.RequireAuthorization();
-
 #region User
-app.MapPost("/users", (User user) =>
-{
-    // Logic to store the user in a database goes here
-    User userReceive = user;
-    // For simplicity, we'll just return the user
-    return Results.Created($"/users/{user.Email}", user);
-})
+app.MapGet("/hello", (HttpContext context)
+        => Results.Ok(context.User.Identity?.Name ?? string.Empty))
 .WithOpenApi(operation => new(operation)
 {
-    Summary = "This is a summary",
-    Description = "This is a description"
-})
-.WithTags("Authentication & Authorization");
+    Summary = "Pagina Inicial",
+    Description = "Enpoint para buscar todos os registros da Tabela IBGE."
+}).WithTags("Authentication & Authorization")
+.RequireAuthorization();
 
-app.MapGet("/user", async ([FromServices] IUserService employeeService) => await employeeService.GetAllAsList()).WithTags("Teste");
-app.MapGet("/user/{id}", async ([FromServices] IUserService employeeService, int id) => await employeeService.GetById(id));
-app.MapPost("/user", async ([FromServices] IUserService employeeService, User user) => await employeeService.Create(user));
-app.MapPut("/user", async ([FromServices] IUserService employeeService, User user) => await employeeService.Update(user));
-app.MapDelete("/user/{id}", async ([FromServices] IUserService employeeService, int id) => await employeeService.Delete(id));
+app.MapPost("/login", (User user, TokenService tokenService)
+    => TokenService.Generate(user))
+.WithOpenApi(operation => new(operation)
+{
+    Summary = "Busca todos os dados IBGE",
+    Description = "Enpoint para buscar todos os registros da Tabela IBGE."
+}).WithTags("Authentication & Authorization");
+
+app.MapGet("/employee",
+        (ClaimsPrincipal user) =>
+            Results.Ok(new { message = $"Authenticated as {user.Identity?.Name}" }))
+.WithOpenApi(operation => new(operation)
+{
+    Summary = "Busca todos os dados IBGE",
+    Description = "Enpoint para buscar todos os registros da Tabela IBGE."
+}).WithTags("Authentication & Authorization")
+.RequireAuthorization("Employee");
+
+app.MapGet("/manager",
+        (ClaimsPrincipal user) =>
+            Results.Ok(new { message = $"Authenticated as {user.Identity?.Name}" }))
+.WithOpenApi(operation => new(operation)
+{
+    Summary = "Busca todos os dados IBGE",
+    Description = "Enpoint para buscar todos os registros da Tabela IBGE."
+}).WithTags("Authentication & Authorization")
+.RequireAuthorization("Admin");
+
 #endregion User
 #region IBGE
 app.MapGet("/ibge", async ([FromServices] IIBGEService ibgeService) => await ibgeService.GetAllInformation())
@@ -134,8 +148,3 @@ app.MapPost("/upload", (IFormFile file) =>
 });
 #endregion Aditional Functionality
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
